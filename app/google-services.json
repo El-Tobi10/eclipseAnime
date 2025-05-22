@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "670060238472",
+    "project_id": "eclipseapp-9fca3",
+    "storage_bucket": "eclipseapp-9fca3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670060238472:android:f100349450024d3fedb13d",
+        "android_client_info": {
+          "package_name": "ar.edu.uade.c012025.animeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRYy8WWloJYxHET1uy1YKIEmy-BrktOEc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
