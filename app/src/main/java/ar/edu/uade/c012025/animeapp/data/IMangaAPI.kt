@@ -14,4 +14,10 @@ interface IMangaAPI {
     suspend fun getManga(
         @Path("mangaId") mangaId: Int
     ): MangaDetailResult
+
+    @GET("manga/{id}/characters")
+    suspend fun getCharactersForManga(@Path("id") mangaId: Int): CharacterResult
+
+    @GET("manga/{id}/recommendations")
+    suspend fun getRecommendationsForManga(@Path("id") mangaId: Int): RecommendationResultManga
 }

@@ -10,8 +10,14 @@ interface IAnimeAPI {
         @Query("q") search: String
     ) : AnimeResult
 
-    @GET("anime/{animeId}")
+    @GET("anime/{animeId}/full")
     suspend fun getAnime(
         @Path("animeId") animeId: Int
     ): AnimeDetailResult
+
+    @GET("anime/{id}/characters")
+    suspend fun getCharactersForAnime(@Path("id") animeId: Int): CharacterResult
+
+    @GET("anime/{id}/recommendations")
+    suspend fun getRecommendationsForAnime(@Path("id") animeId: Int): RecommendationResultAnime
 }

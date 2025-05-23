@@ -33,4 +33,24 @@ class MangaApiDataSource : IMangaDataSource {
         return RetrofitInstance.mangaApi.getManga(mangaId).data
     }
 
+    override suspend fun getCharactersForManga(mangaId: Int): List<CharacterData> {
+        return try {
+            val result = RetrofitInstance.mangaApi.getCharactersForManga(mangaId)
+            result.data.map { it.character }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error cargando personajes: ${e.message}")
+            emptyList()
+        }
+    }
+
+    override suspend fun getRecommendationsForManga(mangaId: Int): List<Manga> {
+        return try{
+            val result = RetrofitInstance.mangaApi.getRecommendationsForManga(mangaId)
+            result.data.map { it.entry }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error cargando recomendaciones: ${e.message}")
+            emptyList()
+        }
+    }
+
 }

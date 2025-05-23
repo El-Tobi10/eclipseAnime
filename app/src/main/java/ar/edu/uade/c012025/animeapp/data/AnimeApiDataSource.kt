@@ -1,10 +1,9 @@
 package ar.edu.uade.c012025.animeapp.data
 
 import android.util.Log
+import ar.edu.uade.c012025.animeapp.data.CharacterData
 import okio.IOException
 import retrofit2.HttpException
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class AnimeApiDataSource : IAnimeDataSource {
     private val TAG = "AnimeApp"
@@ -32,5 +31,26 @@ class AnimeApiDataSource : IAnimeDataSource {
     override suspend fun getAnimeById(animeId: Int): Anime {
         return RetrofitInstance.animeApi.getAnime(animeId).data
     }
+
+    override suspend fun getCharactersForAnime(animeId: Int): List<CharacterData> {
+        return try {
+            val result = RetrofitInstance.animeApi.getCharactersForAnime(animeId)
+            result.data.map { it.character }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error cargando personajes: ${e.message}")
+            emptyList()
+        }
+    }
+
+    override suspend fun getRecommendationsForAnime(animeId: Int): List<Anime> {
+        return try {
+            val result = RetrofitInstance.animeApi.getRecommendationsForAnime(animeId)
+            result.data.map { it.entry }
+        } catch (e: Exception) {
+            Log.e(TAG, "Error cargando recomendaciones: ${e.message}")
+            emptyList()
+        }
+    }
+
 
 }

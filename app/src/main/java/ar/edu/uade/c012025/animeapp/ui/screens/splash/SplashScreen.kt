@@ -1,5 +1,7 @@
 package ar.edu.uade.c012025.animeapp.ui.screens.splash
 
+import android.R.attr.background
+import android.R.id.primary
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,7 +33,7 @@ fun SplashScreen(
 {
     LaunchedEffect(Unit) {
         delay(2000) // Espera 2 segundos
-        navController.navigate(Screens.AnimeList.route) {
+        navController.navigate(Screens.Index.route) {
             popUpTo("splash") { inclusive = true } // evita volver atrás
         }
     }
@@ -39,7 +41,7 @@ fun SplashScreen(
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFF1F1B24)), // fondo oscuro temático anime
+            .background(MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -47,28 +49,18 @@ fun SplashScreen(
         ) {
             // Imagen central
             AsyncImage(
-                model = "https://cdn-icons-png.flaticon.com/512/8144/8144787.png", // o tu logo
-                contentDescription = "Logo Anime",
+                model = "https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//logo_completo_invertido.png", // o tu logo
+                contentDescription = "Logo Eclipse",
                 modifier = Modifier
-                    .size(120.dp)
-                    .clip(CircleShape),
-                contentScale = ContentScale.Crop
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Anime Explorer",
-                style = MaterialTheme.typography.headlineMedium,
-                color = Color.White
+                    .size(230.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Descubrí tus series favoritas",
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.LightGray
+                text = "Descubrí tus animes y mangas favoritos",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
             )
         }
     }

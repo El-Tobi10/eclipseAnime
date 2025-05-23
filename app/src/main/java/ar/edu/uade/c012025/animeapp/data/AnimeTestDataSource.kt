@@ -20,6 +20,12 @@ class AnimeTestDataSource : IAnimeDataSource {
     override suspend fun getAnimeById(animeId: Int): Anime {
         return getAnimeList("")[0]
     }
+    override suspend fun getCharactersForAnime(animeId: Int): List<CharacterData> {
+        return emptyList()
+    }
+    override suspend fun getRecommendationsForAnime(animeId: Int): List<Anime> {
+        return emptyList()
+    }
 
     private var json = """
     {

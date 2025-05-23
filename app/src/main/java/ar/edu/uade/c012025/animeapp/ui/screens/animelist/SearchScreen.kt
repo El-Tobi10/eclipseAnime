@@ -1,5 +1,6 @@
 package ar.edu.uade.c012025.animeapp.ui.screens.animelist
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -15,55 +19,67 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import ar.edu.uade.c012025.animeapp.data.SearchItemType
 import ar.edu.uade.c012025.animeapp.ui.screens.Screens
-import ar.edu.uade.c012025.animeapp.ui.screens.commons.AnimeUIList
-import ar.edu.uade.c012025.animeapp.ui.theme.AnimeAppTheme
+import ar.edu.uade.c012025.animeapp.ui.screens.commons.Header
+import ar.edu.uade.c012025.animeapp.ui.screens.commons.HeaderIndex
+import ar.edu.uade.c012025.animeapp.ui.screens.commons.SearchUIList
 
 @Composable
 fun AnimeListScreen(
     modifier: Modifier = Modifier,
-    vm: AnimeListScreenViewModel = viewModel(),
+    vm: SearchViewModel = viewModel(),
     navController: NavHostController
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color(0xFF1E1B2E))
             .padding(16.dp)
     ) {
+        Header(navController)
         Text(
-            text = "Listado de Anime",
+            text = "Resultados",
             style = MaterialTheme.typography.titleLarge,
-            modifier = modifier
+            modifier = modifier.fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally),
+            textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(12.dp))
 
         Row(
-            modifier= Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextField(
                 value = vm.uiState.searchQuery,
-                modifier= Modifier.weight(1f),
-                label = { Text("Buscar anime: ") },
+                modifier = Modifier.weight(1f),
+                label = { Text("Buscar anime o manga:") },
                 singleLine = true,
                 onValueChange = { vm.searchChange(it) }
             )
             Spacer(modifier = Modifier.width(8.dp))
             Button(
-                onClick = { vm.fetchAnimes() }
+                onClick = { vm.fetchResults() }  // ahora busca ambos
             ) {
                 Text("Buscar")
             }
         }
 
         Spacer(modifier = Modifier.height(12.dp))
-        AnimeUIList(vm.uiState.animeList, Modifier.fillMaxSize(), onClick = {
-            id -> navController.navigate(Screens.AnimeDetail.route + "/${id}")
-        })
+        SearchUIList(vm.uiState.searchResults, Modifier.fillMaxSize()) { item ->
+            when (item.type) {
+                SearchItemType.ANIME -> navController.navigate(Screens.AnimeDetail.route + "/${item.id}")
+                SearchItemType.MANGA -> navController.navigate(Screens.MangaDetail.route + "/${item.id}")
+
+                else -> throw IllegalStateException("Unexpected item type: ${item.type}")
+            }
+        }
     }
 }
 

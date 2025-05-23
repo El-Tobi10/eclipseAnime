@@ -1,4 +1,4 @@
-package ar.edu.uade.c012025.animeapp.ui.screens.animedetail
+package ar.edu.uade.c012025.animeapp.ui.screens.details
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -7,11 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import ar.edu.uade.c012025.animeapp.ui.screens.commons.AnimeUiItem
+import androidx.navigation.NavHostController
 
 @Composable
 fun AnimeDetailScreen(
     animeId: Int,
+    navController: NavHostController,
     modifier: Modifier = Modifier,
     vm: AnimeDetailScreenViewModel = viewModel()
 )
@@ -24,6 +25,6 @@ fun AnimeDetailScreen(
         }
     }
     else {
-        AnimeUiItemDetail(vm.uiState.animeDetail)
+        AnimeUiItemDetail(vm.uiState.animeDetail, navController)
     }
 }

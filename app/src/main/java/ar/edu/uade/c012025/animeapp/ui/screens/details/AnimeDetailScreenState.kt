@@ -1,4 +1,4 @@
-package ar.edu.uade.c012025.animeapp.ui.screens.animedetail
+package ar.edu.uade.c012025.animeapp.ui.screens.details
 
 import ar.edu.uade.c012025.animeapp.data.Anime
 import ar.edu.uade.c012025.animeapp.data.emptyAnime

@@ -13,4 +13,11 @@ class AnimeRepository(
     override suspend fun fetchAnime(animeId: Int): Anime {
         return animeDataSource.getAnimeById(animeId)
     }
+    override suspend fun fetchCharacters(animeId: Int): List<CharacterData> {
+        return animeDataSource.getCharactersForAnime(animeId)
+    }
+    override suspend fun fetchRecommendations(animeId: Int): List<Anime> {
+        return animeDataSource.getRecommendationsForAnime(animeId)
+    }
+
 }
