@@ -48,10 +48,10 @@ ui/
 
 📸 Capturas
 
-<img src="https://github.com/user-attachments/assets/59e8542b-a3d0-463f-b5a0-bb879d72e2b9" width="300"/> 
-<img src="https://github.com/user-attachments/assets/a84c3862-2974-4b07-a316-d9c2af9733f6" width="300"/>
-<img src="https://github.com/user-attachments/assets/c296514c-f04d-465f-a1c3-735d69a2f521" width="300"/> 
-<img src="https://github.com/user-attachments/assets/be2a5e45-e6e9-4407-a3ae-bc35c5ceefd2" width="300"/>
+<img src="https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//index.webp" width="500"/> 
+<img src="https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//busqueda.webp" width="500"/>
+<img src="https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//Anime.webp" width="500"/> 
+<img src="https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//manga.webp" width="500"/>
 
 💬 Créditos
 Desarrollado por El-Tobi10 🌌
