@@ -1,18 +1,20 @@
 package ar.edu.uade.c012025.animeapp.data
 
 import android.util.Log
+import kotlinx.coroutines.delay
 import okio.IOException
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class MangaApiDataSource : IMangaDataSource {
-    private val TAG = "AnimeApp"
+    private val TAG = "EclipseApp"
 
     override suspend fun getMangaList(search: String): List<Manga> {
         Log.d(TAG, "MangaApiDataSource.getMangaList")
 
         return try {
+            delay(1000)
             Log.d(TAG, "MangaApiDataSource.getMangaList Search: $search")
             val mangaResult = RetrofitInstance.mangaApi.getMangaSearch(search)
             Log.d(TAG, "MangaApiDataSource.getMangaList Result: ${mangaResult.data.size}")
@@ -30,13 +32,20 @@ class MangaApiDataSource : IMangaDataSource {
     }
 
     override suspend fun getMangaById(mangaId: Int): Manga {
-        return RetrofitInstance.mangaApi.getManga(mangaId).data
+        delay(1000)
+        return try {
+            RetrofitInstance.mangaApi.getManga(mangaId).data
+        } catch (e: HttpException) {
+            Log.e(TAG, "Error de HTTP: ${e.code()} ${e.message()}")
+            emptyManga()
+        }
     }
 
-    override suspend fun getCharactersForManga(mangaId: Int): List<CharacterData> {
+    override suspend fun getCharactersForManga(mangaId: Int): List<Character> {
         return try {
+            Log.d(TAG, "MangaApiDataSource.getCharactersForManga id: $mangaId")
             val result = RetrofitInstance.mangaApi.getCharactersForManga(mangaId)
-            result.data.map { it.character }
+            result.data
         } catch (e: Exception) {
             Log.e(TAG, "Error cargando personajes: ${e.message}")
             emptyList()
@@ -45,6 +54,7 @@ class MangaApiDataSource : IMangaDataSource {
 
     override suspend fun getRecommendationsForManga(mangaId: Int): List<Manga> {
         return try{
+            delay(1000)
             val result = RetrofitInstance.mangaApi.getRecommendationsForManga(mangaId)
             result.data.map { it.entry }
         } catch (e: Exception) {
@@ -53,4 +63,13 @@ class MangaApiDataSource : IMangaDataSource {
         }
     }
 
+    override suspend fun getRandomManga(): Manga {
+        delay(1000)
+        return try{
+            RetrofitInstance.mangaApi.getRandomManga().data
+        } catch (e: HttpException) {
+            Log.e(TAG, "Error de HTTP: ${e.code()} ${e.message()}")
+            emptyManga()
+        }
+    }
 }

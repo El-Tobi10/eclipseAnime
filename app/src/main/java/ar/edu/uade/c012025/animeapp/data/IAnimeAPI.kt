@@ -15,9 +15,16 @@ interface IAnimeAPI {
         @Path("animeId") animeId: Int
     ): AnimeDetailResult
 
-    @GET("anime/{id}/characters")
-    suspend fun getCharactersForAnime(@Path("id") animeId: Int): CharacterResult
+    @GET("anime/{animeId}/characters")
+    suspend fun getCharactersForAnime(
+        @Path("animeId") animeId: Int
+    ): AnimeCharacters
 
-    @GET("anime/{id}/recommendations")
-    suspend fun getRecommendationsForAnime(@Path("id") animeId: Int): RecommendationResultAnime
+    @GET("anime/{animeId}/recommendations")
+    suspend fun getRecommendationsForAnime(
+        @Path("animeId") animeId: Int
+    ): RecommendationResultAnime
+
+    @GET("random/anime")
+    suspend fun getRandomAnime(): AnimeDetailResult
 }

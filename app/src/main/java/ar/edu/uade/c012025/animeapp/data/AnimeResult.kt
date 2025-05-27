@@ -6,20 +6,26 @@ data class AnimeResult(
     val data: List<Anime>
 )
 
+data class AnimeCharacters(
+    val data: List<Character>
+)
+
 data class AnimeDetailResult(
     val data: Anime
 )
 
 data class Anime(
     @SerializedName("mal_id") val id: Int,
-    val images: Images,
+    val images: Images?,
     val title: String,
     @SerializedName("title_japanese") val titleJapanese: String?,
     val type: String?,
+    val trailer: Trailer?,
     val episodes: Int?,
     val status: String?,
     val score: Double?,
-    val synopsis: String,
+    val studios: List<Studios>,
+    val synopsis: String?,
     val genres: List<Genre> = emptyList(),
     val themes: List<Genre> = emptyList(),
     val duration: String?,
@@ -31,11 +37,22 @@ data class Anime(
 )
 
 data class Images(
-    val jpg: ImagesJpg
+    val jpg: ImagesJpg?
 )
 
 data class ImagesJpg(
     @SerializedName("image_url") val imageUrl: String
+)
+
+data class Studios(
+    @SerializedName("mal_id") val id: Int,
+    val name: String
+)
+
+data class Trailer(
+    @SerializedName("youtube_id") val youtubeId: String,
+    val url: String?,
+    @SerializedName("embed_url") val embedUrl: String?
 )
 data class Opening(
     val openings: List<String>
@@ -66,6 +83,9 @@ fun emptyAnime(): Anime {
         season = "",
         streaming = emptyList(),
         theme = Opening(emptyList()),
-        year = 0
+        year = 0,
+        trailer = Trailer("", "", ""),
+        studios = emptyList()
+
     )
 }

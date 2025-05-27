@@ -13,10 +13,13 @@ class MangaRepository (
         override suspend fun fetchManga(mangaId: Int): Manga {
             return mangaDataSource.getMangaById(mangaId)
         }
-        override suspend fun fetchCharacters(mangaId: Int): List<CharacterData> {
+        override suspend fun fetchCharacters(mangaId: Int): List<Character> {
             return mangaDataSource.getCharactersForManga(mangaId)
         }
         override suspend fun fetchRecommendations(mangaId: Int): List<Manga> {
             return mangaDataSource.getRecommendationsForManga(mangaId)
+        }
+        override suspend fun fetchRandomManga(): Manga {
+            return mangaDataSource.getRandomManga()
         }
 }

@@ -6,7 +6,7 @@ import okio.IOException
 import retrofit2.HttpException
 
 class AnimeApiDataSource : IAnimeDataSource {
-    private val TAG = "AnimeApp"
+    private val TAG = "EclipseApp"
 
     override suspend fun getAnimeList(search: String): List<Anime> {
         Log.d(TAG, "AnimeApiDataSource.getAnimeList")
@@ -32,10 +32,10 @@ class AnimeApiDataSource : IAnimeDataSource {
         return RetrofitInstance.animeApi.getAnime(animeId).data
     }
 
-    override suspend fun getCharactersForAnime(animeId: Int): List<CharacterData> {
+    override suspend fun getCharactersForAnime(animeId: Int): List<Character> {
         return try {
             val result = RetrofitInstance.animeApi.getCharactersForAnime(animeId)
-            result.data.map { it.character }
+            result.data
         } catch (e: Exception) {
             Log.e(TAG, "Error cargando personajes: ${e.message}")
             emptyList()
@@ -52,5 +52,13 @@ class AnimeApiDataSource : IAnimeDataSource {
         }
     }
 
+    override suspend fun getRandomAnime(): Anime {
+        return try{
+            RetrofitInstance.animeApi.getRandomAnime().data
+        } catch (e: HttpException) {
+            Log.e(TAG, "Error de HTTP: ${e.code()} ${e.message()}")
+            emptyAnime()
+        }
+    }
 
 }

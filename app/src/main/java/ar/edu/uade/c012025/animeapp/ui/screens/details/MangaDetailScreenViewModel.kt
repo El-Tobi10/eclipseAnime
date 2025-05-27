@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.uade.c012025.animeapp.data.Anime
+import ar.edu.uade.c012025.animeapp.data.Character
 import ar.edu.uade.c012025.animeapp.data.CharacterData
 import ar.edu.uade.c012025.animeapp.data.Manga
 import ar.edu.uade.c012025.animeapp.data.MangaRepository
@@ -33,7 +34,7 @@ class MangaDetailScreenViewModel (
         fetchManga()
     }
 
-    var characterList by mutableStateOf<List<CharacterData>>(emptyList())
+    var characterList by mutableStateOf<List<Character>>(emptyList())
         private set
 
     fun loadCharacters(mangaId: Int) {

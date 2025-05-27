@@ -33,7 +33,7 @@ fun SplashScreen(
 {
     LaunchedEffect(Unit) {
         delay(2000) // Espera 2 segundos
-        navController.navigate(Screens.Index.route) {
+        navController.navigate(Screens.Login.route) {
             popUpTo("splash") { inclusive = true } // evita volver atrás
         }
     }
@@ -52,7 +52,7 @@ fun SplashScreen(
                 model = "https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//logo_completo_invertido.png", // o tu logo
                 contentDescription = "Logo Eclipse",
                 modifier = Modifier
-                    .size(230.dp)
+                    .size(250.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))

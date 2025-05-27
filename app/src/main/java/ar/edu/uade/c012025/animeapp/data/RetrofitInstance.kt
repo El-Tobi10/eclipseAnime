@@ -19,5 +19,11 @@ object RetrofitInstance {
     val mangaApi: IMangaAPI by lazy {
         retrofit.create(IMangaAPI::class.java)
     }
+    val charactersApi: ICharactersApi by lazy {
+        retrofit.create(ICharactersApi::class.java)
+    }
+    val topApi: ITopAPI by lazy {
+        retrofit.create(ITopAPI::class.java)
+    }
 
 }

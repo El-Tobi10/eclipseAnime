@@ -9,20 +9,24 @@ import ar.edu.uade.c012025.animeapp.data.Manga
 @Composable
 fun AnimeDetails(anime: Anime) {
     Column {
+        Text("Estudio/s: ${anime.studios.joinToString { it.name }}")
+        Text("Año de Publicacion: ${anime.year ?: "-"}")
         Text("Puntuacion: ${anime.score ?: "-"}")
         Text("Rating: ${anime.rating ?: "-"}")
         Text("Episodios: ${anime.episodes ?: "-"}")
         Text("Duración: ${anime.duration ?: "-"}")
         Text("Géneros: ${anime.genres.joinToString { it.name }}")
         Text("Estado: ${anime.status ?: "-"}")
-        Text("Ver en: ${anime.streaming.joinToString { it.name }}")
+        if (anime.streaming.isNotEmpty()) {
+            Text("Ver en: ${anime.streaming.joinToString { it.name }}")
+        }
     }
 }
 @Composable
 fun MangaDetails(manga: Manga) {
     Column {
         Text("Puntuacion: ${manga.score ?: "-"}")
-        Text("Publicacion: ${manga.published ?: "-"}")
+        Text("Publicacion: ${manga.published?.string ?: "-"}")
         Text("Géneros: ${manga.genres.joinToString { it.name }}")
         Text("Estado: ${manga.status ?: "-"}")
     }

@@ -36,7 +36,7 @@ class SearchViewModel(
                         SearchItem(
                             id = it.id,
                             title = it.title,
-                            imageUrl = it.images.jpg.imageUrl,
+                            imageUrl = it.images?.jpg?.imageUrl.toString(),
                             type = SearchItemType.ANIME
                         )
                     }
@@ -46,7 +46,7 @@ class SearchViewModel(
                         SearchItem(
                             id = it.id,
                             title = it.title,
-                            imageUrl = it.images.jpg.imageUrl,
+                            imageUrl = it.images.jpg?.imageUrl.toString(),
                             type = SearchItemType.MANGA
                         )
                     }

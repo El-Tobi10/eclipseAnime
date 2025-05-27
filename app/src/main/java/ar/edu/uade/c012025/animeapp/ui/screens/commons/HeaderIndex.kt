@@ -16,18 +16,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import ar.edu.uade.c012025.animeapp.ui.screens.Screens
 
 import coil.compose.AsyncImage
 
 @Composable
-fun HeaderIndex() {
+fun HeaderIndex(navController : NavHostController, onMenuClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = { /* Abrir menú */ }) {
+        IconButton(onClick = onMenuClick ) {
             Icon(Icons.Default.Menu,
                 contentDescription = "Menú",
                 modifier = Modifier.size(30.dp))
@@ -44,7 +46,7 @@ fun HeaderIndex() {
 
         Spacer(modifier = Modifier.weight(1f))
 
-        IconButton(onClick = { /* abrir búsqueda */ }) {
+        IconButton(onClick = { navController.navigate(Screens.AnimeList.route) }) {
             Icon(Icons.Default.Search, contentDescription = "Buscar")
         }
 

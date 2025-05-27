@@ -6,6 +6,10 @@ data class MangaResult(
     val data: List<Manga>
 )
 
+data class MangaCharacters(
+    val data: List<Character>
+)
+
 data class MangaDetailResult(
     val data: Manga
 )
@@ -16,11 +20,11 @@ data class Manga(
     val title: String,
     @SerializedName("title_japanese")
     val titleJapanese: String?,
-    val synopsis: String,
+    val synopsis: String?,
     val background: String?,
     val chapters: Int?,
     val volumes: Int?,
-    val status: String,
+    val status: String?,
     val publishing: Boolean,
     val score: Double?,
     val rank: Int?,
@@ -31,7 +35,7 @@ data class Manga(
     val demographics: List<Genres>,
     val authors: List<Author>,
     val serializations: List<Serialization>,
-    val published: Published
+    val published: Published?
 )
 
 data class Author(
@@ -57,6 +61,17 @@ data class Genres(
     val id: Int,
     val name: String,
     val url: String
+)
+
+data class Character(
+    val character: CharacterInfo,
+    val role: String,
+)
+
+data class CharacterInfo(
+    @SerializedName("mal_id") val id: Int,
+    val images: Images,
+    val name: String
 )
 
 fun emptyManga(): Manga {

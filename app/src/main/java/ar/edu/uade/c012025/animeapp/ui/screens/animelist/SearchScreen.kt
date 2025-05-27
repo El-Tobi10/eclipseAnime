@@ -13,10 +13,15 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,58 +31,73 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ar.edu.uade.c012025.animeapp.data.SearchItemType
 import ar.edu.uade.c012025.animeapp.ui.screens.Screens
+import ar.edu.uade.c012025.animeapp.ui.screens.commons.AppScaffold
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.Header
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.HeaderIndex
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.SearchUIList
+import ar.edu.uade.c012025.animeapp.ui.screens.login.AuthViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun AnimeListScreen(
     modifier: Modifier = Modifier,
     vm: SearchViewModel = viewModel(),
-    navController: NavHostController
+    navController: NavHostController,
+    authViewModel: AuthViewModel = viewModel()
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF1E1B2E))
-            .padding(16.dp)
-    ) {
-        Header(navController)
-        Text(
-            text = "Resultados",
-            style = MaterialTheme.typography.titleLarge,
-            modifier = modifier.fillMaxWidth()
-                .wrapContentWidth(Alignment.CenterHorizontally),
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.height(12.dp))
+    val user by authViewModel.user.collectAsState()
+    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val scope = rememberCoroutineScope()
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
+    AppScaffold(
+        navController = navController,
+        user = user,
+        authViewModel = authViewModel
+    ) {padding->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color(0xFF1E1B2E))
+                .padding(padding)
         ) {
-            TextField(
-                value = vm.uiState.searchQuery,
-                modifier = Modifier.weight(1f),
-                label = { Text("Buscar anime o manga:") },
-                singleLine = true,
-                onValueChange = { vm.searchChange(it) }
+            //Header(navController, onMenuClick = { scope.launch { drawerState.open() } })
+            Text(
+                text = "Resultados",
+                style = MaterialTheme.typography.titleLarge,
+                modifier = modifier.fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                textAlign = TextAlign.Center
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Button(
-                onClick = { vm.fetchResults() }  // ahora busca ambos
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Buscar")
+                TextField(
+                    value = vm.uiState.searchQuery,
+                    modifier = Modifier.weight(1f),
+                    label = { Text("Buscar anime o manga:") },
+                    singleLine = true,
+                    onValueChange = { vm.searchChange(it) }
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(
+                    onClick = { vm.fetchResults() }  // ahora busca ambos
+                ) {
+                    Text("Buscar")
+                }
             }
-        }
 
-        Spacer(modifier = Modifier.height(12.dp))
-        SearchUIList(vm.uiState.searchResults, Modifier.fillMaxSize()) { item ->
-            when (item.type) {
-                SearchItemType.ANIME -> navController.navigate(Screens.AnimeDetail.route + "/${item.id}")
-                SearchItemType.MANGA -> navController.navigate(Screens.MangaDetail.route + "/${item.id}")
+            Spacer(modifier = Modifier.height(12.dp))
 
-                else -> throw IllegalStateException("Unexpected item type: ${item.type}")
+            SearchUIList(vm.uiState.searchResults, Modifier.fillMaxSize()) { item ->
+                when (item.type) {
+                    SearchItemType.ANIME -> navController.navigate(Screens.AnimeDetail.route + "/${item.id}")
+                    SearchItemType.MANGA -> navController.navigate(Screens.MangaDetail.route + "/${item.id}")
+
+                    else -> throw IllegalStateException("Unexpected item type: ${item.type}")
+                }
             }
         }
     }
