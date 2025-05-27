@@ -37,20 +37,20 @@ _Eclipse_ es una aplicación Android desarrollada con Kotlin y Jetpack Compose, 
 
 La app está dividida en módulos siguiendo una estructura **MVVM** limpia:
 
-data/
-├── models/
-├── repository/
-└── api/
-domain/
-ui/
-├── screens/
-└── components/
-
+-data/
+-├── models/
+-├── repository/
+-└── api/
+-domain/
+-ui/
+-├── screens/
+-└── components/
+---
 📸 Capturas
 
 <img src="https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//index.webp" width="200"/>  <img src="https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//busqueda.webp" width="200"/>
 <img src="https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//Anime.webp" width="200"/> <img src="https://kksqeezvcyujrkjnkrjo.supabase.co/storage/v1/object/public/logo//manga.webp" width="200"/>
-
+---
 💬 Créditos
 Desarrollado por El-Tobi10 🌌
 Diseñado con ❤️ por un fan del anime, para fans del anime.
