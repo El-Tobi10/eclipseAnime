@@ -100,7 +100,8 @@ fun CharacterUiItemDetail(character: CharacterData, navController: NavHostContro
                 Text("Aparece en animes:",
                     style = MaterialTheme.typography.titleMedium,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.padding(15.dp))
+                    modifier = Modifier.padding(15.dp),
+                    color = MaterialTheme.colorScheme.secondary)
                 character.anime.forEach {
                     Text(
                         "- ${it.anime?.title} (Rol: ${it.role})",
@@ -117,7 +118,8 @@ fun CharacterUiItemDetail(character: CharacterData, navController: NavHostContro
                 Text("Aparece en mangas:",
                     style = MaterialTheme.typography.titleMedium,
                     textDecoration = TextDecoration.Underline,
-                    modifier = Modifier.padding(15.dp))
+                    modifier = Modifier.padding(15.dp),
+                    color = MaterialTheme.colorScheme.secondary)
                 character.manga.forEach {
                     Text(
                         "- ${it.manga?.title} (Rol: ${it.role})",

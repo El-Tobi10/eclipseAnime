@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -125,10 +126,14 @@ fun MangaUiItemDetail(
             Row(modifier = Modifier.padding(16.dp)) {
                 // Columna Izquierda
                 Column(modifier = Modifier.weight(1f)) {
-                    Text("Volumenes: ${manga.volumes ?: "-"}")
-                    Text("Capítulos: ${manga.chapters ?: "-"}")
-                    Text("Autor/es: ${manga.authors.joinToString { it.name }}")
-                    Text("Editorial/es: ${manga.serializations.joinToString { it.name }}")
+                    Text("Volumenes: ", textDecoration = TextDecoration.Underline, color = MaterialTheme.colorScheme.secondary)
+                    Text("${manga.volumes ?: "-"}")
+                    Text("Capítulos: ", textDecoration = TextDecoration.Underline, color = MaterialTheme.colorScheme.secondary)
+                    Text("${manga.chapters ?: "-"}")
+                    Text("Autor/es: ", textDecoration = TextDecoration.Underline, color = MaterialTheme.colorScheme.secondary)
+                    Text(manga.authors.joinToString { it.name })
+                    Text("Editorial/es: ", textDecoration = TextDecoration.Underline, color = MaterialTheme.colorScheme.secondary)
+                    Text(manga.serializations.joinToString { it.name })
 
                     Spacer(modifier = Modifier.height(18.dp))
 
@@ -142,7 +147,9 @@ fun MangaUiItemDetail(
                     Text(
                         "Personajes principales",
                         style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        textDecoration = TextDecoration.Underline,
+                        color = MaterialTheme.colorScheme.secondary
                     )
                     Log.d("CharacterGrid", "Characters: $characters")
 //                    if (characters.isNotEmpty()) {
@@ -157,7 +164,9 @@ fun MangaUiItemDetail(
             Text(
                 "Si te gusta este título, quizás te guste:",
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
+                textDecoration = TextDecoration.Underline,
+                color = MaterialTheme.colorScheme.secondary
             )
             RecommendationsSliderManga(mangas = recommendations, navController = navController)
         }

@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -150,7 +151,6 @@ fun AnimeUiItemDetail(anime: Anime, navController: NavHostController, vm: AnimeD
                     if (query.isNotBlank()) {
                         OpeningSearchButton(youtubeSearchUrl = youtubeSearchUrl)
                     }
-                    //OpeningSearchButton(youtubeSearchUrl = youtubeSearchUrl)
                 }
 
                 Spacer(modifier = Modifier.width(16.dp))
@@ -160,11 +160,11 @@ fun AnimeUiItemDetail(anime: Anime, navController: NavHostController, vm: AnimeD
                     Text(
                         "Personajes principales",
                         style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(bottom = 8.dp)
+                        modifier = Modifier.padding(bottom = 8.dp),
+                        textDecoration = TextDecoration.Underline,
+                        color = MaterialTheme.colorScheme.secondary
                     )
-//                    if (characters.isNotEmpty()) {
-//                        CharacterGrid(personajes = characters, navController = navController)
-//                    }
+//
                     CharacterGrid(personajes = characters, navController = navController)
                 }
             }
@@ -174,7 +174,9 @@ fun AnimeUiItemDetail(anime: Anime, navController: NavHostController, vm: AnimeD
             Text(
                 "Si te gusta este título, quizás te guste:",
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
+                textDecoration = TextDecoration.Underline,
+                color = MaterialTheme.colorScheme.secondary
             )
             RecommendationsSliderAnime(animes = recommendations, navController = navController)
         }

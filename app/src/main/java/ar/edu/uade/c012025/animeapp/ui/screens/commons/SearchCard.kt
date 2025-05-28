@@ -40,7 +40,7 @@ fun SearchCard(item: SearchItem, navController : NavHostController) {
                 model = item.imageUrl,
                 contentDescription = item.title,
                 modifier = Modifier
-                    .height(200.dp)
+                    .height(140.dp)
                     .clip(RoundedCornerShape(8.dp))
 
             )
@@ -48,7 +48,6 @@ fun SearchCard(item: SearchItem, navController : NavHostController) {
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(item.title, style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center)
-
 
     }
 }
