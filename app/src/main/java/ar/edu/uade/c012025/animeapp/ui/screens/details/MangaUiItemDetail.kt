@@ -59,8 +59,6 @@ fun MangaUiItemDetail(
     val characters = vm.characterList
     val recommendations = vm.recommendationList
     val user by authViewModel.user.collectAsState()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
 
     AppScaffold(
         navController = navController,

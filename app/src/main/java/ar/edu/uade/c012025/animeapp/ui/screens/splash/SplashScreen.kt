@@ -32,7 +32,7 @@ fun SplashScreen(
 )
 {
     LaunchedEffect(Unit) {
-        delay(2000) // Espera 2 segundos
+        delay(1000) // Espera 1 segundos
         navController.navigate(Screens.Login.route) {
             popUpTo("splash") { inclusive = true } // evita volver atrás
         }

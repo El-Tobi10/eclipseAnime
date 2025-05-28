@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,8 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow.Companion.Ellipsis
 import androidx.compose.ui.unit.dp
 import ar.edu.uade.c012025.animeapp.ui.screens.Screens
 import coil.compose.AsyncImage
@@ -33,7 +32,8 @@ fun DrawerContent(
     Column(modifier = Modifier
         .fillMaxSize()
         .background(MaterialTheme.colorScheme.surface)
-        .padding(12.dp)) {
+        .padding(top = 48.dp)
+    ) {
 
         user?.photoUrl?.let {
             AsyncImage(
@@ -54,28 +54,52 @@ fun DrawerContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        DrawerButton("Inicio") { onNavigate(Screens.Index.route) }
-        DrawerButton("Animes") { onNavigate(Screens.AnimeList.route) }
-        DrawerButton("Mangas") { onNavigate(Screens.AnimeList.route) }
-        DrawerButton("Mis Favoritos") { onNavigate(Screens.Index.route) }
+        val items = listOf(
+            "Inicio" to Screens.Index.route,
+            "Animes" to Screens.AnimeList.route,
+            "Mangas" to Screens.AnimeList.route,
+            "Mis Favoritos" to Screens.Index.route
+        )
+
+        items.forEachIndexed { index, (label, route) ->
+            Divider(color = Color.Gray.copy(alpha = 0.3f))
+            Text(
+                text = label,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onNavigate(route) }
+                    .padding(vertical = 16.dp, horizontal = 20.dp),
+                color = MaterialTheme.colorScheme.onSurface,
+                style = MaterialTheme.typography.bodyLarge
+            )
+
+        }
+
+        Divider(color = Color.Gray.copy(alpha = 0.3f))
 
         Spacer(modifier = Modifier.weight(1f))
 
-        DrawerButton("FAQ") { onNavigate(Screens.Index.route) }
-        DrawerButton("Cerrar Sesión", color = MaterialTheme.colorScheme.error) { onLogout() }
-    }
-}
+        // FAQ + Cerrar sesión
+        Column(modifier = Modifier.padding(40.dp)) {
+            Text(
+                text = "FAQ",
+                color = MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onNavigate(Screens.FAQ.route) }
+                    .padding(vertical = 12.dp),
+                style = MaterialTheme.typography.bodyLarge
+            )
 
-@Composable
-fun DrawerButton(text: String, color: Color = MaterialTheme.colorScheme.onSurface, onClick: () -> Unit) {
-    Text(
-        text = text,
-        color = color,
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onClick() }
-            .padding(12.dp),
-        style = MaterialTheme.typography.bodyLarge,
-        textAlign = TextAlign.Center,
-    )
+            Text(
+                text = "Cerrar Sesión",
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onLogout() }
+                    .padding(vertical = 12.dp),
+                style = MaterialTheme.typography.bodyLarge
+            )
+        }
+    }
 }

@@ -26,7 +26,7 @@ fun HeaderIndex(navController : NavHostController, onMenuClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp),
+            .padding(top = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = onMenuClick ) {

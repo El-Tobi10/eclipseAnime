@@ -8,7 +8,6 @@ class TopDataSource : ITopDataSource {
 
     override suspend fun getLastEpisodes(): List<Episodes> {
         return try {
-            delay(500)
             val result = RetrofitInstance.topApi.getLastEpisodes()
             result.data
         } catch (e: Exception) {
@@ -19,7 +18,6 @@ class TopDataSource : ITopDataSource {
 
     override suspend fun getTopAnime(): List<Anime> {
         return try {
-            delay(500)
             val result = RetrofitInstance.topApi.getTopAnime()
             result.data
         } catch (e: Exception) {
@@ -30,7 +28,6 @@ class TopDataSource : ITopDataSource {
 
     override suspend fun getTopManga(): List<Manga> {
         return try {
-            delay(500)
             val result = RetrofitInstance.topApi.getTopManga()
             result.data
         } catch (e: Exception) {

@@ -27,7 +27,7 @@ fun Header(navController: NavHostController, onMenuClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(top = 20.dp)
             .clickable{
                 navController.navigate(Screens.Index.route)
             },

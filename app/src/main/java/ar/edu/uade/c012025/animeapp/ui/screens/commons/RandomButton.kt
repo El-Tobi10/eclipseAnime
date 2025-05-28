@@ -49,7 +49,7 @@ fun RandomButton(text: String,
             },
         colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = RoundedCornerShape(8.dp),
-        border = BorderStroke(1.dp, Color.Black),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.onPrimary),
     ) {
         Text( text= text,
             color = MaterialTheme.colorScheme.onPrimary)

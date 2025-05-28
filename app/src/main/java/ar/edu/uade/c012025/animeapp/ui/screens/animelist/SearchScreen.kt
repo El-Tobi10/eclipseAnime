@@ -46,8 +46,6 @@ fun AnimeListScreen(
     authViewModel: AuthViewModel = viewModel()
 ) {
     val user by authViewModel.user.collectAsState()
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
 
     AppScaffold(
         navController = navController,
@@ -57,8 +55,9 @@ fun AnimeListScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF1E1B2E))
+                .background(MaterialTheme.colorScheme.background)
                 .padding(padding)
+                .padding(horizontal = 15.dp)
         ) {
             //Header(navController, onMenuClick = { scope.launch { drawerState.open() } })
             Text(

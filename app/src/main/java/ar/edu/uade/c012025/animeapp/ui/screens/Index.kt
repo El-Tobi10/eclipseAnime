@@ -68,6 +68,7 @@ fun HomeScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
                 .verticalScroll(rememberScrollState())
+                .padding(bottom = 40.dp)
         ) {
             HeaderIndex(navController = navController, onMenuClick = { scope.launch { drawerState.open() } })
 

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ar.edu.uade.c012025.animeapp.ui.screens.FaqScreen.FaqScreen
 import ar.edu.uade.c012025.animeapp.ui.screens.details.AnimeDetailScreen
 import ar.edu.uade.c012025.animeapp.ui.screens.animelist.AnimeListScreen
 import ar.edu.uade.c012025.animeapp.ui.screens.details.CharacterDetailScreen
@@ -27,6 +28,9 @@ fun NavigationStack() {
         }
         composable(route = Screens.Index.route) {
             HomeScreen(navController = navController)
+        }
+        composable(route = Screens.FAQ.route) {
+            FaqScreen(navController = navController)
         }
         composable(route = Screens.AnimeList.route) {
             AnimeListScreen(navController = navController)
