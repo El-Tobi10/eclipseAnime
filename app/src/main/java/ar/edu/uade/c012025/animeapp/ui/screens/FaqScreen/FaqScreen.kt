@@ -44,13 +44,12 @@ import kotlinx.coroutines.launch
 @Composable
 fun FaqScreen(navController : NavHostController, authViewModel: AuthViewModel = viewModel()) {
     val faqItems = listOf(
-        "¿Qué puedo hacer con Eclipse?" to "Navegá el multiverso otaku: sinopsis, personajes, trailers, openings y plataformas para ver anime o leer manga. Todo en un solo lugar sugoi~ ✨",
-        "¿Puedo ver anime desde Eclipse?" to "No directamente, pero te llevamos a donde se ve de forma oficial y con calidad legendaria 🖥️🔥",
-        "¿Y los mangas, los puedo leer acá?" to "Te guiamos a sitios legales donde podés leerlos tranquu, sin arriesgar tu dispositivo a un jutsu oscuro 💀📖",
-        "¿La info se actualiza sola?" to "Obvio, como por arte de magia otaku. Vos solo mirá, que la info se mantiene al día automáticamente 🌌",
+        "¿Qué puedo hacer con Eclipse?" to "Navegá el multiverso otaku: sinopsis, personajes, trailers, openings y plataformas para ver anime o leer manga. Todo en un solo lugar ✨",
+        "¿Puedo ver anime desde Eclipse?" to "No directamente, pero te llevamos a donde se ve de forma oficial y con una exelente calidad 🖥️🔥",
+        "¿Y los mangas, los puedo leer acá?" to "No. Pero te muestra enlaces seguros y legales para hacerlo.",
+        "¿La info se actualiza sola?" to "¡Sí!, la app consume datos directamente desde MyAnimeList, que mantiene información actualizada.",
         "¿Puedo armar mi lista de favoritos?" to "¡Sí! Guardá tus animes y mangas fav y volvé a ellos como si fueran tu arco de relleno preferido 😎",
         "¿La app es gratuita?" to "100% gratis. Lo único que podés necesitar son cuentas en los servicios externos si querés ver/leer desde ahí.",
-        "¿Tengo que registrarme?" to "No hace falta, pero si querés guardar tus cosas o personalizar la app, registrarte suma nivel como personaje de RPG 🎮",
         "¿Puedo sugerir nuevos títulos?" to "¡Claro! Mandanos tu sugerencia desde la app y ayudanos a hacer crecer Eclipse con tus favoritos 💌✨"
     )
     val user by authViewModel.user.collectAsState()
