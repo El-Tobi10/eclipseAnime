@@ -1,4 +1,4 @@
-package ar.edu.uade.c012025.animeapp.ui.screens
+package ar.edu.uade.c012025.animeapp.ui.screens.index
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,7 +12,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -27,7 +26,6 @@ import ar.edu.uade.c012025.animeapp.ui.screens.commons.ItemGrid
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.ItemRow
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.RandomButton
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.SectionTitle
-import ar.edu.uade.c012025.animeapp.ui.screens.index.HomeViewModel
 import ar.edu.uade.c012025.animeapp.ui.screens.login.AuthViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue

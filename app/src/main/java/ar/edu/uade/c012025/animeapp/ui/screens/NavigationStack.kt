@@ -9,6 +9,7 @@ import ar.edu.uade.c012025.animeapp.ui.screens.details.AnimeDetailScreen
 import ar.edu.uade.c012025.animeapp.ui.screens.animelist.AnimeListScreen
 import ar.edu.uade.c012025.animeapp.ui.screens.details.CharacterDetailScreen
 import ar.edu.uade.c012025.animeapp.ui.screens.details.MangaDetailScreen
+import ar.edu.uade.c012025.animeapp.ui.screens.index.HomeScreen
 import ar.edu.uade.c012025.animeapp.ui.screens.login.LoginScreen
 import ar.edu.uade.c012025.animeapp.ui.screens.splash.SplashScreen
 
