@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ar.edu.uade.c012025.animeapp.data.Anime
+import ar.edu.uade.c012025.animeapp.data.SearchItem
+import ar.edu.uade.c012025.animeapp.data.SearchItemType
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.AnimeDetails
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.AppScaffold
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.CharacterGrid
@@ -63,6 +65,12 @@ fun AnimeUiItemDetail(anime: Anime, navController: NavHostController, vm: AnimeD
     val youtubeSearchUrl = "https://www.youtube.com/results?search_query=${URLEncoder.encode(query, "UTF-8")}"
 
     val user by authViewModel.user.collectAsState()
+    val email = user?.email ?: ""
+    val item = SearchItem(anime.id, anime.title, anime.images?.jpg?.imageUrl, SearchItemType.ANIME)
+
+    LaunchedEffect(anime.id) {
+        vm.checkFavorite(email, item)
+    }
 
     Log.d("AnimeDetail", "anime: ${anime.title}, trailer: ${anime.trailer}, theme: ${anime.theme}")
 
@@ -132,7 +140,10 @@ fun AnimeUiItemDetail(anime: Anime, navController: NavHostController, vm: AnimeD
             }
 
             // Botón de favoritos
-            FavoriteButton()
+            FavoriteButton(
+                isFavorite = vm.isFavorite,
+                onClick = { vm.toggleFavorite(email, item) }
+            )
 
             // Trailer
             //TrailerYoutubePlayer(youtubeUrl = anime.trailer?.youtubeId ?: "")

@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ar.edu.uade.c012025.animeapp.data.Manga
+import ar.edu.uade.c012025.animeapp.data.SearchItem
+import ar.edu.uade.c012025.animeapp.data.SearchItemType
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.AppScaffold
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.CharacterGrid
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.FavoriteButton
@@ -60,6 +62,13 @@ fun MangaUiItemDetail(
     val characters = vm.characterList
     val recommendations = vm.recommendationList
     val user by authViewModel.user.collectAsState()
+
+    val email = user?.email ?: ""
+    val item = SearchItem(manga.id, manga.title, manga.images?.jpg?.imageUrl, SearchItemType.MANGA)
+
+    LaunchedEffect(manga.id) {
+        vm.checkFavorite(email, item)
+    }
 
     AppScaffold(
         navController = navController,
@@ -120,7 +129,10 @@ fun MangaUiItemDetail(
             }
 
             // Botón de favoritos
-            FavoriteButton()
+            FavoriteButton(
+                isFavorite = vm.isFavorite,
+                onClick = { vm.toggleFavorite(email, item) }
+            )
 
             // Columnas de detalles y personajes
             Row(modifier = Modifier.padding(16.dp)) {

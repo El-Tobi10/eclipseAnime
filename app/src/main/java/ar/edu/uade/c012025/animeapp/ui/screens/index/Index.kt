@@ -6,12 +6,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -29,6 +32,7 @@ import ar.edu.uade.c012025.animeapp.ui.screens.commons.SectionTitle
 import ar.edu.uade.c012025.animeapp.ui.screens.login.AuthViewModel
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
+import ar.edu.uade.c012025.animeapp.ui.screens.Screens
 
 
 @Composable
@@ -85,10 +89,22 @@ fun HomeScreen(
             ItemRow(items = state.lastEpisodes, navController = navController)
 
             SectionTitle("Animes Populares")
-            ItemGrid(items = state.topAnimes, navController = navController)
+            ItemGrid(items = state.topAnimes, navController = navController, modifier = Modifier.height(400.dp))
+            Button(
+                modifier = Modifier.padding(12.dp).fillMaxWidth(),
+                onClick = { navController.navigate(Screens.Animes.route) }
+            ) {
+                Text("Ver más")
+            }
 
             SectionTitle("Mangas Populares")
-            ItemGrid(items = state.topMangas, navController = navController)
+            ItemGrid(items = state.topMangas, navController = navController, modifier = Modifier.height(400.dp))
+            Button(
+                modifier = Modifier.padding(12.dp).fillMaxWidth(),
+                onClick = { navController.navigate(Screens.Mangas.route) }
+            ) {
+                Text("Ver más")
+            }
         }
     }
 }

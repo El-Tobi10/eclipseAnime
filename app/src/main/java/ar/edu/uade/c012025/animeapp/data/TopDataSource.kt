@@ -35,4 +35,23 @@ class TopDataSource : ITopDataSource {
             emptyList()
         }
     }
+
+    override suspend fun getAllTopAnime(page: Int): TopAnimeResult {
+        return try {
+            val result = RetrofitInstance.topApi.getAllTopAnime(page)
+            result
+        } catch (e: Exception) {
+            Log.e(TAG, "Error cargando animes populares: ${e.message}")
+        } as TopAnimeResult
+    }
+
+    override suspend fun getAllTopManga(page: Int): TopMangaResult {
+        return try {
+            val result = RetrofitInstance.topApi.getAllTopManga(page)
+            result
+        } catch (e: Exception) {
+            Log.e(TAG, "Error cargando mangas populares: ${e.message}")
+        } as TopMangaResult
+    }
+
 }

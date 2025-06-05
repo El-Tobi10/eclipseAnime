@@ -8,16 +8,21 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.uade.c012025.animeapp.data.Anime
 import ar.edu.uade.c012025.animeapp.data.Character
 import ar.edu.uade.c012025.animeapp.data.CharacterData
+import ar.edu.uade.c012025.animeapp.data.FavoritesRepository
 import ar.edu.uade.c012025.animeapp.data.Manga
 import ar.edu.uade.c012025.animeapp.data.MangaRepository
+import ar.edu.uade.c012025.animeapp.data.SearchItem
 import ar.edu.uade.c012025.animeapp.domain.IMangaRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class MangaDetailScreenViewModel (
-    private val mangaRepository: IMangaRepository = MangaRepository()
+    private val mangaRepository: IMangaRepository = MangaRepository(),
+    private val favoritesRepository: FavoritesRepository = FavoritesRepository()
 ) : ViewModel() {
     var uiState by mutableStateOf(MangaDetailScreenState())
+        private set
+    var isFavorite by mutableStateOf(false)
         private set
 
     private var fetchJob: Job? = null
@@ -49,6 +54,19 @@ class MangaDetailScreenViewModel (
     fun loadRecommendations(mangaId: Int) {
         viewModelScope.launch {
             recommendationList = mangaRepository.fetchRecommendations(mangaId)
+        }
+    }
+
+    fun checkFavorite(email: String, item: SearchItem) {
+        viewModelScope.launch {
+            isFavorite = favoritesRepository.isFavorite(email, item)
+        }
+    }
+
+    fun toggleFavorite(email: String, item: SearchItem) {
+        viewModelScope.launch {
+            favoritesRepository.toggleFavorite(email, item)
+            isFavorite = !isFavorite
         }
     }
 

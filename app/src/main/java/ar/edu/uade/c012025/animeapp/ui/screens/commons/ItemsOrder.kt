@@ -1,11 +1,10 @@
 package ar.edu.uade.c012025.animeapp.ui.screens.commons
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import ar.edu.uade.c012025.animeapp.data.SearchItem
@@ -22,17 +21,18 @@ fun ItemRow(items: List<SearchItem>, navController: NavHostController) {
     }
 }
 
+
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ItemGrid(items: List<SearchItem>, navController: NavHostController) {
+fun ItemGrid(items: List<SearchItem>, navController: NavHostController, modifier: Modifier = Modifier) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         contentPadding = PaddingValues(16.dp),
-        modifier = Modifier.height(300.dp)
+        modifier = modifier
     ) {
         items(items.size) { index ->
             val item = items[index]
             SearchCard(item, navController)
         }
-
     }
 }

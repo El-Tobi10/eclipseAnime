@@ -13,5 +13,11 @@ class TopRepositoy(val topDataSource: ITopDataSource = TopDataSource()) : ITopRe
     override suspend fun fetchTopManga(): List<Manga> {
         return topDataSource.getTopManga()
     }
+    override suspend fun fetchAllTopAnime(page: Int): TopAnimeResult {
+        return topDataSource.getAllTopAnime(page)
+    }
+    override suspend fun fetchAllTopManga(page: Int): TopMangaResult {
+        return topDataSource.getAllTopManga(page)
+    }
 
 }

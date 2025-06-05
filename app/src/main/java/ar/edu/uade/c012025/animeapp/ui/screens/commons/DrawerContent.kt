@@ -56,9 +56,9 @@ fun DrawerContent(
 
         val items = listOf(
             "Inicio" to Screens.Index.route,
-            "Animes" to Screens.AnimeList.route,
-            "Mangas" to Screens.AnimeList.route,
-            "Mis Favoritos" to Screens.Index.route
+            "Animes" to Screens.Animes.route,
+            "Mangas" to Screens.Mangas.route,
+            "Mis Favoritos" to Screens.Favs.route
         )
 
         items.forEachIndexed { index, (label, route) ->
