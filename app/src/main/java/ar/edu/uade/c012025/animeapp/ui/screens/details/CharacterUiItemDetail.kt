@@ -36,7 +36,11 @@ import ar.edu.uade.c012025.animeapp.ui.screens.login.AuthViewModel
 import coil.compose.AsyncImage
 
 @Composable
-fun CharacterUiItemDetail(character: CharacterData, navController: NavHostController, authViewModel: AuthViewModel = viewModel()) {
+fun CharacterUiItemDetail(
+    character: CharacterData,
+    navController: NavHostController,
+    authViewModel: AuthViewModel = viewModel()
+) {
     val user by authViewModel.user.collectAsState()
 
     AppScaffold(

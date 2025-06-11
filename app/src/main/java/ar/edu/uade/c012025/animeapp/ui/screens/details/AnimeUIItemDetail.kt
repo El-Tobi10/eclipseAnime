@@ -13,17 +13,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,36 +38,42 @@ import ar.edu.uade.c012025.animeapp.ui.screens.commons.AnimeDetails
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.AppScaffold
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.CharacterGrid
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.FavoriteButton
-import ar.edu.uade.c012025.animeapp.ui.screens.commons.Header
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.OpeningSearchButton
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.RecommendationsSliderAnime
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.TrailerYoutubePlayer
 import ar.edu.uade.c012025.animeapp.ui.screens.login.AuthViewModel
 import coil.compose.AsyncImage
-import kotlinx.coroutines.launch
 import java.net.URLEncoder
 
 @Composable
-fun AnimeUiItemDetail(anime: Anime, navController: NavHostController, vm: AnimeDetailScreenViewModel = viewModel(), authViewModel: AuthViewModel = viewModel()) {
-    LaunchedEffect(anime.id) {
-        vm.loadCharacters(animeId = anime.id)
-        vm.loadRecommendations(anime.id)
-    }
+fun AnimeUiItemDetail(
+    anime: Anime,
+    navController: NavHostController,
+    vm: AnimeDetailScreenViewModel = viewModel(),
+    authViewModel: AuthViewModel = viewModel()
+){
 
-    val characters = vm.characterList
-    val recommendations = vm.recommendationList
 
-    val opening = anime.theme?.openings?.firstOrNull()
-    val query = opening?.replace("\"", "")?.replace(" by ", " ") ?: ""
-    val youtubeSearchUrl = "https://www.youtube.com/results?search_query=${URLEncoder.encode(query, "UTF-8")}"
 
     val user by authViewModel.user.collectAsState()
     val email = user?.email ?: ""
     val item = SearchItem(anime.id, anime.title, anime.images?.jpg?.imageUrl, SearchItemType.ANIME)
 
     LaunchedEffect(anime.id) {
+        vm.loadCharacters(animeId = anime.id)
+        vm.loadRecommendations(anime.id)
         vm.checkFavorite(email, item)
     }
+
+    val characters = vm.characterList
+    val recommendations = vm.recommendationList
+
+    val opening = anime.theme.openings.firstOrNull()
+    val query = opening?.replace("\"", "")?.replace(" by ", " ") ?: ""
+    val youtubeSearchUrl = "https://www.youtube.com/results?search_query=${URLEncoder.encode(query, "UTF-8")}"
+
+
+
 
     Log.d("AnimeDetail", "anime: ${anime.title}, trailer: ${anime.trailer}, theme: ${anime.theme}")
 
@@ -85,9 +88,6 @@ fun AnimeUiItemDetail(anime: Anime, navController: NavHostController, vm: AnimeD
                 .verticalScroll(rememberScrollState())
                 .padding(padding)
         ) {
-            // Header
-            //Header(navController, onMenuClick = { scope.launch { drawerState.open() } })
-
             // Título del anime
             Text(
                 text = buildString {

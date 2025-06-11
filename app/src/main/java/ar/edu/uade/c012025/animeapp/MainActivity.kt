@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import ar.edu.uade.c012025.animeapp.data.localdata.AppDatabase
 import ar.edu.uade.c012025.animeapp.ui.screens.NavigationStack
 import ar.edu.uade.c012025.animeapp.ui.theme.EclipseTheme
 
@@ -14,6 +15,9 @@ import ar.edu.uade.c012025.animeapp.ui.theme.EclipseTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppDatabase.createInstance(context = this)
+
         enableEdgeToEdge()
         setContent {
             EclipseTheme {

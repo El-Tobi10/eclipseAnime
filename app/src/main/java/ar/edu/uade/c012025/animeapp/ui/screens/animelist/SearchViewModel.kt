@@ -1,5 +1,6 @@
 package ar.edu.uade.c012025.animeapp.ui.screens.animelist
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,8 +19,9 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 
 class SearchViewModel(
-    private val animeRepository: IAnimeRepository = AnimeRepository(),
-    private val mangaRepository: IMangaRepository = MangaRepository()
+    context : Context,
+    private val animeRepository: IAnimeRepository = AnimeRepository(context),
+    private val mangaRepository: IMangaRepository = MangaRepository(context)
 ) : ViewModel() {
 
     var uiState by mutableStateOf(SearchScreenState())

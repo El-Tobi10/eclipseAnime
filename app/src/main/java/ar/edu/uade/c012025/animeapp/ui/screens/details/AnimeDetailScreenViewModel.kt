@@ -9,24 +9,58 @@ import androidx.lifecycle.viewModelScope
 import ar.edu.uade.c012025.animeapp.data.Anime
 import ar.edu.uade.c012025.animeapp.data.AnimeRepository
 import ar.edu.uade.c012025.animeapp.data.Character
-import ar.edu.uade.c012025.animeapp.data.CharacterData
 import ar.edu.uade.c012025.animeapp.data.FavoritesRepository
 import ar.edu.uade.c012025.animeapp.data.SearchItem
+import ar.edu.uade.c012025.animeapp.data.localdata.AnimeEntity
+import ar.edu.uade.c012025.animeapp.data.localdata.toExternal
+import ar.edu.uade.c012025.animeapp.data.localdata.toLocal
 import ar.edu.uade.c012025.animeapp.domain.IAnimeRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class AnimeDetailScreenViewModel(
-    private val animeRepository: IAnimeRepository = AnimeRepository(),
-    private val favoritesRepository: FavoritesRepository = FavoritesRepository()
+    private val animeRepository: IAnimeRepository,
+    private val favoritesRepository: FavoritesRepository
 ) : ViewModel() {
     var uiState by mutableStateOf(AnimeDetailScreenState())
         private set
     var isFavorite by mutableStateOf(false)
         private set
+    var anime by mutableStateOf<Anime?>(null)
+        private set
 
     private var fetchJob: Job? = null
+
+    fun loadAnime(animeId: Int) {
+        viewModelScope.launch {
+            Log.d("AnimeVM", "Inicia loadAnime con ID $animeId")
+
+            try {
+                val localEntity = animeRepository.getAnimeById(animeId)
+                Log.d("AnimeVM", "Resultado local: $localEntity")
+
+                if (localEntity != null) {
+                    anime = localEntity.toExternal()
+                    Log.d("AnimeVM", "Cargado desde ROOM: ${anime?.title}")
+                } else {
+                    val remoteAnime = animeRepository.fetchAnime(animeId)
+                    anime = remoteAnime
+                    animeRepository.insertAnime(remoteAnime.toLocal())
+                    Log.d("AnimeVM", "Cargado desde API y guardado local")
+                }
+
+            } catch (e: Exception) {
+                Log.e("AnimeVM", "Error en loadAnime", e)
+            }
+        }
+    }
+
+    fun saveAnime(anime: AnimeEntity) {
+        viewModelScope.launch {
+            animeRepository.insertAnime(anime)
+        }
+    }
 
     fun fetchAnime() {
         fetchJob?.cancel()

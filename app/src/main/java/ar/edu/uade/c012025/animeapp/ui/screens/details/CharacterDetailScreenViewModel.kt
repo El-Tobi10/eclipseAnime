@@ -6,17 +6,45 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ar.edu.uade.c012025.animeapp.data.CharacterRepository
+import ar.edu.uade.c012025.animeapp.data.CharacterData
+import ar.edu.uade.c012025.animeapp.data.localdata.toCharacterExternal
+import ar.edu.uade.c012025.animeapp.data.localdata.toCharacterLocal
 import ar.edu.uade.c012025.animeapp.domain.ICharacterRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CharacterDetailScreenViewModel (
-    private val characterRepository: ICharacterRepository = CharacterRepository()
+    private val characterRepository: ICharacterRepository
 ) : ViewModel(){
     var uiState by mutableStateOf(CharacterDetailScreenState())
         private set
+    var character by mutableStateOf<CharacterData?>(null)
+        private set
+
+    fun loadCharacter(characterId: Int) {
+        viewModelScope.launch {
+            Log.d("CharacterVM", "Inicia loadCharacter con ID $characterId")
+
+            try {
+                val localEntity = characterRepository.getCharacterById(characterId)
+                Log.d("CharacterVM", "Resultado local: $localEntity")
+
+                if (localEntity != null) {
+                    character = localEntity.toCharacterExternal()
+                    Log.d("CharacterVM", "Cargado desde ROOM: ${character?.name}")
+                } else {
+                    val remoteCharacter = characterRepository.fetchCharacter(characterId)
+                    character = remoteCharacter
+                    characterRepository.insertCharacter(remoteCharacter.toCharacterLocal())
+                    Log.d("CharacterVM", "Cargado desde API y guardado local")
+                }
+
+            } catch (e: Exception) {
+                Log.e("CharacterVM", "Error en loadCharacter", e)
+            }
+        }
+    }
 
     private var fetchJob: Job? = null
 

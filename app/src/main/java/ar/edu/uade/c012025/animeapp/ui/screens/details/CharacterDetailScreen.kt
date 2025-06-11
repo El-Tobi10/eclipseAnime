@@ -8,17 +8,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import ar.edu.uade.c012025.animeapp.data.AnimeRepository
+import ar.edu.uade.c012025.animeapp.data.CharacterRepository
+import ar.edu.uade.c012025.animeapp.data.FavoritesRepository
 
 @Composable
 fun CharacterDetailScreen(
     characterId: Int,
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    vm: CharacterDetailScreenViewModel = viewModel()
+    //vm: CharacterDetailScreenViewModel = viewModel()
 )
 {
+    val context = LocalContext.current.applicationContext
+    val characterRepository = CharacterRepository(context)
+
+    val vm: CharacterDetailScreenViewModel = viewModel(
+        factory = CharacterDetailViewModelFactory(characterRepository)
+    )
 
     vm.setCharacterId(characterId)
 
@@ -32,6 +42,15 @@ fun CharacterDetailScreen(
         }
     }
     else {
-        CharacterUiItemDetail(vm.uiState.characterDetail, navController)
+        LaunchedEffect(characterId) {
+            vm.loadCharacter(characterId)
+        }
+
+        val character = vm.character
+        if (character != null) {
+            CharacterUiItemDetail(character, navController)
+        } else {
+            CircularProgressIndicator()
+        }
     }
 }

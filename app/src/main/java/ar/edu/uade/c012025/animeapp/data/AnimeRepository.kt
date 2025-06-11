@@ -1,11 +1,27 @@
 package ar.edu.uade.c012025.animeapp.data
 
+import android.content.Context
+import ar.edu.uade.c012025.animeapp.data.localdata.AnimeEntity
+import ar.edu.uade.c012025.animeapp.data.localdata.AppDatabase
+import ar.edu.uade.c012025.animeapp.data.localdata.IAnimeDao
 import ar.edu.uade.c012025.animeapp.domain.IAnimeRepository
 
 class AnimeRepository(
-    val animeDataSource: IAnimeDataSource = AnimeApiDataSource()
+    context: Context,
+    val animeDataSource: IAnimeDataSource = AnimeApiDataSource(),
+    private val animeDao: IAnimeDao = AppDatabase.createInstance(context).animeDao()
 ) : IAnimeRepository
 {
+
+    override suspend fun insertAnime(anime: AnimeEntity) {
+        animeDao.insertAnime(anime)
+    }
+
+    override suspend fun getAnimeById(id: Int): AnimeEntity? {
+        return animeDao.getAnimeById(id)
+    }
+
+
     override suspend fun fetchAnimes(search: String) : List<Anime> {
         return animeDataSource.getAnimeList(search)
     }
