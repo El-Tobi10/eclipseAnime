@@ -2,6 +2,8 @@ package ar.edu.uade.c012025.animeapp.data.localdata
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import ar.edu.uade.c012025.animeapp.data.CharacterAnime
+import ar.edu.uade.c012025.animeapp.data.CharacterManga
 
 @Entity(tableName = "character_table")
 data class CharacterEntity (
@@ -11,8 +13,8 @@ data class CharacterEntity (
     val nameKanji: String,
     val nicknames: String,
     val about: String,
-    val anime: String?,
+    val anime: List<CharacterAnime>,
 //    val animeRole: String?,
-    val manga: String?,
+    val manga: List<CharacterManga>,
 //    val mangaRole: String?
 )

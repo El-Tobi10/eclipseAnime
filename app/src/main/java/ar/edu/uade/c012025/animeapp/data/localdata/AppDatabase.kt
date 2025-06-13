@@ -4,12 +4,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import android.content.Context
+import androidx.room.TypeConverters
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 
-@Database(entities = [AnimeEntity::class, MangaEntity::class, CharacterEntity::class], version = 3)
+@Database(entities = [AnimeEntity::class, MangaEntity::class, CharacterEntity::class], version = 4)
+@TypeConverters(CharacterConverters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun animeDao(): IAnimeDao
     abstract fun mangaDao(): IMangaDao

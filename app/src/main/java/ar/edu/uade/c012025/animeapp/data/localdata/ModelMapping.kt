@@ -120,10 +120,8 @@ fun CharacterData.toCharacterLocal() = CharacterEntity(
     nameKanji = nameKanji ?: "",
     nicknames = nicknames?.joinToString() ?: "",
     about = about ?: "",
-    anime = anime.joinToString(),
-//    animeRole = anime.role ?: "",
-    manga = manga.joinToString(),
-//    mangaRole = manga.role ?: ""
+    anime = anime,
+    manga = manga,
 )
 
 fun List<CharacterData>.toCharacterLocal() = map(CharacterData::toCharacterLocal)
@@ -135,8 +133,8 @@ fun CharacterEntity.toCharacterExternal() = CharacterData(
     nameKanji = nameKanji,
     nicknames = nicknames.split(","),
     about = about,
-    anime = (anime?.split(",")?.map { CharacterAnime(it, null) } ?: "") as List<CharacterAnime>,
-    manga = (manga?.split(",")?.map { CharacterManga(it, null) } ?: "") as List<CharacterManga>
+    anime = anime,
+    manga = manga
 )
 
 fun List<CharacterEntity>.toCharacterExternal() = map(CharacterEntity::toCharacterExternal)
