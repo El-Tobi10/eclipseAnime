@@ -21,7 +21,10 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -51,6 +54,7 @@ fun AnimeListScreen(
     val user by authViewModel.user.collectAsState()
     val context = LocalContext.current
     val vm: SearchViewModel = viewModel(factory = SearchViewModelFactory(context))
+    var selectedGenreId by remember { mutableStateOf<Int?>(null) }
 
     AppScaffold(
         navController = navController,
@@ -95,9 +99,15 @@ fun AnimeListScreen(
             }
             Spacer(modifier = Modifier.height(8.dp))
 
-            GenreSearch(genres = genre.genreList) { selectedGenre ->
-                vm.fetchByGenre(selectedGenre.id)
-            }
+
+            GenreSearch(
+                genres = genre.genreList,
+                selectedGenreId = selectedGenreId,
+                onClick = { genre ->
+                    selectedGenreId = genre.id
+                    vm.fetchByGenre(genre.id)
+                }
+            )
 
             Spacer(modifier = Modifier.height(12.dp))
 

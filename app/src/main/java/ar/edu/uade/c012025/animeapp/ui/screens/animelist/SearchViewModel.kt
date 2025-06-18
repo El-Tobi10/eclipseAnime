@@ -29,6 +29,9 @@ class SearchViewModel(
 
     var uiState by mutableStateOf(SearchScreenState())
         private set
+    var selectedGenreId by mutableStateOf<Int?>(null)
+        private set
+
 
     private var fetchJob: Job? = null
 
@@ -84,6 +87,10 @@ class SearchViewModel(
             }
             uiState = uiState.copy(searchResults = animeResults + mangaResults)
         }
+    }
+
+    fun selectGenre(genreId: Int) {
+        selectedGenreId = genreId
     }
 
     fun searchChange(search: String) {
