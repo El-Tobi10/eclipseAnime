@@ -8,11 +8,13 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ar.edu.uade.c012025.animeapp.data.AnimeRepository
+import ar.edu.uade.c012025.animeapp.data.GenresRepository
 import ar.edu.uade.c012025.animeapp.data.MangaRepository
 import ar.edu.uade.c012025.animeapp.data.SearchItem
 import ar.edu.uade.c012025.animeapp.data.SearchItemType
 import ar.edu.uade.c012025.animeapp.data.SearchScreenState
 import ar.edu.uade.c012025.animeapp.domain.IAnimeRepository
+import ar.edu.uade.c012025.animeapp.domain.IGenresRepository
 import ar.edu.uade.c012025.animeapp.domain.IMangaRepository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -21,7 +23,8 @@ import java.io.IOException
 class SearchViewModel(
     context : Context,
     private val animeRepository: IAnimeRepository = AnimeRepository(context),
-    private val mangaRepository: IMangaRepository = MangaRepository(context)
+    private val mangaRepository: IMangaRepository = MangaRepository(context),
+    private val genreRepository: IGenresRepository = GenresRepository(),
 ) : ViewModel() {
 
     var uiState by mutableStateOf(SearchScreenState())
@@ -57,6 +60,29 @@ class SearchViewModel(
             } catch (e: IOException) {
                 Log.e("Search", "Error recuperando resultados", e)
             }
+        }
+    }
+    fun fetchByGenre(genreId: Int) {
+        viewModelScope.launch {
+            val animeResults = genreRepository.getAnimeByGenre(genreId)
+                .map {
+                SearchItem(
+                    id = it.id,
+                    title = it.title,
+                    imageUrl = it.images?.jpg?.imageUrl,
+                    type = SearchItemType.ANIME
+                )
+            }
+            val mangaResults = genreRepository.getMangaByGenre(genreId)
+                .map {
+                SearchItem(
+                    id = it.id,
+                    title = it.title,
+                    imageUrl = it.images.jpg?.imageUrl,
+                    type = SearchItemType.MANGA
+                )
+            }
+            uiState = uiState.copy(searchResults = animeResults + mangaResults)
         }
     }
 

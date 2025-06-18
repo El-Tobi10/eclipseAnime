@@ -25,11 +25,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import ar.edu.uade.c012025.animeapp.data.SearchItemType
+import ar.edu.uade.c012025.animeapp.ui.screens.GenreSearch.GenreSearch
+import ar.edu.uade.c012025.animeapp.ui.screens.GenreSearch.GenreViewModel
 import ar.edu.uade.c012025.animeapp.ui.screens.Screens
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.AppScaffold
 import ar.edu.uade.c012025.animeapp.ui.screens.commons.Header
@@ -41,11 +44,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun AnimeListScreen(
     modifier: Modifier = Modifier,
-    vm: SearchViewModel = viewModel(),
     navController: NavHostController,
-    authViewModel: AuthViewModel = viewModel()
+    authViewModel: AuthViewModel = viewModel(),
+    genre: GenreViewModel = viewModel()
 ) {
     val user by authViewModel.user.collectAsState()
+    val context = LocalContext.current
+    val vm: SearchViewModel = viewModel(factory = SearchViewModelFactory(context))
 
     AppScaffold(
         navController = navController,
@@ -59,7 +64,7 @@ fun AnimeListScreen(
                 .padding(padding)
                 .padding(horizontal = 15.dp)
         ) {
-            //Header(navController, onMenuClick = { scope.launch { drawerState.open() } })
+
             Text(
                 text = "Resultados",
                 style = MaterialTheme.typography.titleLarge,
@@ -67,6 +72,7 @@ fun AnimeListScreen(
                     .wrapContentWidth(Alignment.CenterHorizontally),
                 textAlign = TextAlign.Center
             )
+
             Spacer(modifier = Modifier.height(12.dp))
 
             Row(
@@ -82,10 +88,15 @@ fun AnimeListScreen(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
-                    onClick = { vm.fetchResults() }  // ahora busca ambos
+                    onClick = { vm.fetchResults() }
                 ) {
                     Text("Buscar")
                 }
+            }
+            Spacer(modifier = Modifier.height(8.dp))
+
+            GenreSearch(genres = genre.genreList) { selectedGenre ->
+                vm.fetchByGenre(selectedGenre.id)
             }
 
             Spacer(modifier = Modifier.height(12.dp))

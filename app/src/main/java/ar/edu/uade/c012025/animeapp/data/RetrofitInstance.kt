@@ -25,5 +25,9 @@ object RetrofitInstance {
     val topApi: ITopAPI by lazy {
         retrofit.create(ITopAPI::class.java)
     }
+    val genresApi: IGenresApi by lazy {
+        retrofit.create(IGenresApi::class.java)
+    }
+
 
 }
