@@ -4,10 +4,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ITopAPI {
-    @GET("top/anime?limit=8")
+    @GET("top/anime?limit=8&filter=bypopularity")
     suspend fun getTopAnime(): TopAnimeResult
 
-    @GET("top/manga?limit=8")
+    @GET("top/manga?limit=8&filter=bypopularity")
     suspend fun getTopManga(): TopMangaResult
 
     @GET("top/anime")

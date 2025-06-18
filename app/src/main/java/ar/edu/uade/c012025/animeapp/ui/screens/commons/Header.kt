@@ -1,11 +1,13 @@
 package ar.edu.uade.c012025.animeapp.ui.screens.commons
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
@@ -27,10 +29,8 @@ fun Header(navController: NavHostController, onMenuClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 20.dp)
-            .clickable{
-                navController.navigate(Screens.Index.route)
-            },
+            .background(MaterialTheme.colorScheme.background)
+            .statusBarsPadding(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = onMenuClick) {
@@ -44,6 +44,9 @@ fun Header(navController: NavHostController, onMenuClick: () -> Unit) {
             contentDescription = "Logo Eclipse",
             modifier = Modifier
                 .size(130.dp)
+                .clickable{
+                    navController.navigate(Screens.Index.route)
+                }
         )
 
         Spacer(modifier = Modifier.weight(1f))
